@@ -1,0 +1,22 @@
+{
+  "name": "chromium",
+  "version": "0.9.0",
+  "description": "Chromium binaries for Node.js projects",
+  "main": "index.js",
+  "os": ["darwin", "linux", "win32"],
+  "scripts": {
+    "postinstall": "node install.js"
+  },
+  "keywords": [
+    "chromium",
+    "chrome",
+    "browser"
+  ],
+  "author": "Dmytro TOLSTYI <dmytro.tolstyi@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "extract-zip": "^1.6.5",
+    "got": "^7.1.0",
+    "tmp": "0.0.33"
+  }
+}
