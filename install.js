@@ -101,7 +101,8 @@ function unzipArchive(archivePath, outputFolder) {
     });
 }
 
-getLatestRevisionNumber()
+module.exports = getLatestRevisionNumber()
     .then(downloadChromiumRevision)
     .then(path => unzipArchive(path, config.BIN_OUT_PATH))
     .catch(error => console.error('An error occurred while trying to setup Chromium. Resolve all issues and restart the process', error));
+

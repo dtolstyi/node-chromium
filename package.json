@@ -3,9 +3,14 @@
   "version": "0.9.0",
   "description": "Chromium binaries for Node.js projects",
   "main": "index.js",
-  "os": ["darwin", "linux", "win32"],
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
   "scripts": {
-    "postinstall": "node install.js"
+    "postinstall": "node install.js",
+    "test": "ava --verbose"
   },
   "keywords": [
     "chromium",
@@ -18,5 +23,9 @@
     "extract-zip": "^1.6.5",
     "got": "^7.1.0",
     "tmp": "0.0.33"
+  },
+  "devDependencies": {
+    "ava": "^0.22.0",
+    "rimraf": "^2.6.2"
   }
 }
