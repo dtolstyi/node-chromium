@@ -1,5 +1,6 @@
-#node-chromium [![Build Status](https://travis-ci.org/dtolstyi/node-chromium.svg?branch=master)](https://travis-ci.org/dtolstyi/node-chromium) [![XO code style](https://img.shields.io/badge/code_style-XO-blue.svg)](https://github.com/sindresorhus/xo) [![Platforms](https://img.shields.io/badge/platforms-Win/Linux/Mac-lightgrey.svg)](https://github.com/dtolstyi/node-chromium)
-> Chromium binaries for your NodeJS project 
+# node-chromium [![Build Status](https://travis-ci.org/dtolstyi/node-chromium.svg?branch=master)](https://travis-ci.org/dtolstyi/node-chromium) [![XO code style](https://img.shields.io/badge/code_style-XO-blue.svg)](https://github.com/sindresorhus/xo) [![Platforms](https://img.shields.io/badge/platforms-Win/Linux/Mac-lightgrey.svg)](https://github.com/dtolstyi/node-chromium)
+> Chromium binaries for your NodeJS project
+
 **node-chromium** allows you to easily add [Chromium](https://www.chromium.org/) binaries to your project and use it for automation, testing, web scraping or just for fun.
 
 ## Why Chromium?
@@ -7,15 +8,14 @@ Chromium(https://www.chromium.org/) is an open-source web browser developed and 
 The main benefit of using Chromium is that it **doesn't** include all the proprietary modifications made by Google, thus it's more lightweight and more suitable for automation purposes.  
 You can see full list of differences in [Fossbytes article](https://fossbytes.com/difference-google-chrome-vs-chromium-browser/).
 
-##Usage
+## Usage
 Depending on your needs, you can install module into **devDependencies** (`--save-dev`) or production **dependencies** (`--save`)
 
 ```
 npm install --save chromium
 ```
 
-During the installation process **node-chromium** will find the latest suitable build for your platform, download it and extract into libraries folder.  
-As soon as installation is finished, you are ready to use Chromium in your project:
+During the installation process **node-chromium** will find the latest suitable build for your platform, download it and extract into libraries folder. As soon as installation is finished, you are ready to use Chromium in your project:
 
 ```js
 const chromium = require('chromium');
@@ -26,7 +26,7 @@ execFile(chromium.path, ['https://google.com'], err => {
 });
 ```
 
-##Selenium WebDriver Headless (without UI) tests
+## Selenium WebDriver Headless (without UI) tests
 It's extremely easy to use **node-chromium** with **selenium-webdriver** to perform e2e tests without spawning browser UI
 
 ```js
