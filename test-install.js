@@ -1,21 +1,23 @@
 'use strict';
 
-const utils = require('./utils');
-const config = require('./config');
-const chromium = require('./install');
+import test from 'ava';
 
 const fs = require('fs');
 const rimraf = require('rimraf');
-import test from 'ava';
+
+const utils = require('./utils');
+const config = require('./config');
+const chromium = require('./install');
 
 test.before(t => {
     // Deleting output folder
     const outPath = config.BIN_OUT_PATH;
     console.log(`Deleting output folder: [${outPath}]`);
 
-    if (fs.existsSync(outPath)){
+    if (fs.existsSync(outPath)) {
         rimraf.sync(outPath);
     }
+    t.pass();
 });
 
 test('Canary Test', t => {

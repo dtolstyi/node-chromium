@@ -1,6 +1,6 @@
 {
   "name": "chromium",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Chromium binaries for Node.js projects",
   "main": "index.js",
   "os": [
@@ -10,8 +10,14 @@
   ],
   "scripts": {
     "postinstall": "node install.js",
-    "test": "ava --verbose"
+    "test": "xo && ava --verbose"
   },
+  "files": [
+    "config.js",
+    "index.js",
+    "install.js",
+    "utils.js"
+  ],
   "keywords": [
     "chromium",
     "chrome",
@@ -19,6 +25,9 @@
   ],
   "author": "Dmytro TOLSTYI <dmytro.tolstyi@gmail.com>",
   "license": "MIT",
+  "xo": {
+    "space": 4
+  },
   "dependencies": {
     "extract-zip": "^1.6.5",
     "got": "^7.1.0",
@@ -26,6 +35,7 @@
   },
   "devDependencies": {
     "ava": "^0.22.0",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "xo": "^0.18.2"
   }
 }

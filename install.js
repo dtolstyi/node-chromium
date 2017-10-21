@@ -1,15 +1,14 @@
 'use strict';
 
-const config = require('./config');
-const utils = require('./utils');
-
+const fs = require('fs');
 const extractZip = require('extract-zip');
 const got = require('got');
 const tmp = require('tmp');
-const fs = require('fs');
+
+const config = require('./config');
+const utils = require('./utils');
 
 const CDN_URL = 'https://www.googleapis.com/download/storage/v1/b/chromium-browser-snapshots/o/';
-
 
 function getOsCdnUrl() {
     let url = CDN_URL;
@@ -30,7 +29,7 @@ function getOsCdnUrl() {
         url += 'Mac';
     } else {
         console.log('Unknown platform or architecture found:', process.platform, process.arch);
-        process.exit(1);
+        throw new Error('Unsupported platform');
     }
 
     return url;
@@ -43,16 +42,16 @@ function getLatestRevisionNumber() {
             .then(response => {
                 resolve(response.body);
             })
-            .catch(error => {
-                console.log('An error occured while trying to retrieve latest revision number', error);
-                reject(error);
+            .catch(err => {
+                console.log('An error occured while trying to retrieve latest revision number', err);
+                reject(err);
             });
     });
 }
 
 function createTempFile() {
     return new Promise((resolve, reject) => {
-        tmp.file((error, path, fd) => {
+        tmp.file((error, path) => {
             if (error) {
                 console.log('An error occured while trying to create temporary file', error);
                 reject(error);
@@ -70,7 +69,7 @@ function downloadChromiumRevision(revision) {
                 console.log('Downloading Chromium archive from Google CDN');
                 const url = getOsCdnUrl() + `%2F${revision}%2F` + utils.getOsChromiumFolderName() + '.zip?alt=media';
                 got.stream(url)
-                    .on('error', (error, body, response) => {
+                    .on('error', error => {
                         console.log('An error occurred while trying to download Chromium archive', error);
                         reject(error);
                     })
@@ -89,7 +88,7 @@ function downloadChromiumRevision(revision) {
 function unzipArchive(archivePath, outputFolder) {
     console.log('Started extracting archive', archivePath);
     return new Promise((resolve, reject) => {
-        extractZip(archivePath, { dir: outputFolder }, error => {
+        extractZip(archivePath, {dir: outputFolder}, error => {
             if (error) {
                 console.log('An error occurred while trying to extract archive', error);
                 reject(error);
@@ -97,12 +96,12 @@ function unzipArchive(archivePath, outputFolder) {
                 console.log('Archive was successfully extracted');
                 resolve(true);
             }
-        })
+        });
     });
 }
 
 module.exports = getLatestRevisionNumber()
     .then(downloadChromiumRevision)
     .then(path => unzipArchive(path, config.BIN_OUT_PATH))
-    .catch(error => console.error('An error occurred while trying to setup Chromium. Resolve all issues and restart the process', error));
+    .catch(err => console.error('An error occurred while trying to setup Chromium. Resolve all issues and restart the process', err));
 

@@ -1,11 +1,11 @@
 'use strict';
 
-const config = require('./config');
-
 const path = require('path');
 
+const config = require('./config');
+
 module.exports = {
-    getOsChromiumFolderName: function() {
+    getOsChromiumFolderName() {
         const platform = process.platform;
 
         let archivePlatformPrefix = platform;
@@ -17,7 +17,7 @@ module.exports = {
         return `chrome-${archivePlatformPrefix}`;
     },
 
-    getOsChromiumBinPath: function() {
+    getOsChromiumBinPath() {
         let binPath = path.join(config.BIN_OUT_PATH, this.getOsChromiumFolderName());
 
         const platform = process.platform;
@@ -29,8 +29,8 @@ module.exports = {
         } else if (platform === 'darwin') {
             binPath = path.join(binPath, 'Chromium.app/Contents/MacOS/Chromium');
         } else {
-            console.log('Unsupported platform or architecture found:', process.platform, process.arch);
-            process.exit(1);
+            console.error('Unsupported platform or architecture found:', process.platform, process.arch);
+            throw new Error('Unsupported platform');
         }
 
         return binPath;

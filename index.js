@@ -1,9 +1,8 @@
 'use strict';
 
-const config = require('./config');
-const utils = require('./utils');
-
 const fs = require('fs');
+
+const utils = require('./utils');
 
 function getBinaryPath() {
     const path = utils.getOsChromiumBinPath();
