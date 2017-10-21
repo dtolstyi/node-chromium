@@ -1,6 +1,6 @@
 {
   "name": "chromium",
-  "version": "0.9.1",
+  "version": "1.0.0",
   "description": "Chromium binaries for Node.js projects",
   "main": "index.js",
   "os": [
