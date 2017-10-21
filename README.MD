@@ -27,9 +27,17 @@ execFile(chromium.path, ['https://google.com'], err => {
 ```
 
 ## Selenium WebDriver Headless (without UI) tests
-It's extremely easy to use **node-chromium** with **selenium-webdriver** to perform e2e tests without spawning browser UI
+It's extremely easy to use **node-chromium** with **selenium-webdriver** to perform e2e tests without spawning browser UI.
+First, install all dependencies
+
+```
+npm install --save chromium chromedriver selenium-webdriver
+```
+
+After the installation is finished, create simple script that opens Google Search home page and takes it's screenshot in headless mode.
 
 ```js
+const fs = require('fs');
 const webdriver = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 const chromium = require('chromium');
@@ -62,6 +70,8 @@ async function takeScreenshot(driver, name) {
         console.log('Screenshot is saved');
     });
 }
+
+start();
 ```
 
 ## License
