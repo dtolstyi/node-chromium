@@ -41,7 +41,6 @@ const fs = require('fs');
 const webdriver = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 const chromium = require('chromium');
-const {By, until, promise} = webdriver;
 require('chromedriver');
 
 async function start() {
