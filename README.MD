@@ -1,4 +1,4 @@
-# node-chromium [![Build Status](https://travis-ci.org/dtolstyi/node-chromium.svg?branch=master)](https://travis-ci.org/dtolstyi/node-chromium) [![XO code style](https://img.shields.io/badge/code_style-XO-blue.svg)](https://github.com/sindresorhus/xo) [![Platforms](https://img.shields.io/badge/platforms-Win/Linux/Mac-lightgrey.svg)](https://github.com/dtolstyi/node-chromium)
+# node-chromium [![Build Status](https://travis-ci.org/dtolstyi/node-chromium.svg?branch=master)](https://travis-ci.org/dtolstyi/node-chromium) [![XO code style](https://img.shields.io/badge/code_style-XO-blue.svg)](https://github.com/sindresorhus/xo) [![npm version](https://badge.fury.io/js/chromium.svg)](https://badge.fury.io/js/chromium) [![Platforms](https://img.shields.io/badge/platforms-Win/Linux/Mac-lightgrey.svg)](https://github.com/dtolstyi/node-chromium)
 > Chromium binaries for your NodeJS project
 
 **node-chromium** allows you to easily add [Chromium](https://www.chromium.org/) binaries to your project and use it for automation, testing, web scraping or just for fun.
