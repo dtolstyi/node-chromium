@@ -12,6 +12,8 @@ module.exports = {
 
         if (platform === 'darwin') {
             archivePlatformPrefix = 'mac';
+        } else if (platform === 'win32') {
+            archivePlatformPrefix = 'win';
         }
 
         return `chrome-${archivePlatformPrefix}`;
