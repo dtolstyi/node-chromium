@@ -11,7 +11,8 @@
   ],
   "scripts": {
     "postinstall": "node install.js",
-    "test": "xo && ava --verbose"
+    "test": "xo && ava --verbose",
+    "test-only": "ava --verbose"
   },
   "files": [
     "config.js",
@@ -30,7 +31,8 @@
     "space": 4
   },
   "dependencies": {
-    "extract-zip": "^1.6.5",
+    "debug": "^4.1.0",
+    "extract-zip": "^1.6.7",
     "got": "^7.1.0",
     "tmp": "0.0.33"
   },
