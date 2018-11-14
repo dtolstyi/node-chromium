@@ -28,7 +28,7 @@ async function downloadChromiumRevision(revision) {
     debug('Downloading Chromium archive from Google CDN');
     const url = utils.getDownloadUrl(revision);
 
-    return await _downloadFile(url, tmpPath);
+    return _downloadFile(url, tmpPath);
 }
 
 function _downloadFile(url, destPath) {
@@ -67,18 +67,18 @@ function unzipArchive(archivePath, outputFolder) {
 
 async function install() {
     try {
-        console.info("Step 1. Retrieving Chromium latest revision number");
+        console.info('Step 1. Retrieving Chromium latest revision number');
         const revision = await utils.getLatestRevisionNumber();
 
-        console.info("Step 2. Downloading Chromium (this might take a while)");
+        console.info('Step 2. Downloading Chromium (this might take a while)');
         const tmpPath = await downloadChromiumRevision(revision);
 
-        console.info("Step 3. Setting up Chromium binaries");
+        console.info('Step 3. Setting up Chromium binaries');
         await unzipArchive(tmpPath, config.BIN_OUT_PATH);
 
-        console.info("Process is successfully finished");
-    } catch (error) {
-        console.error('An error occurred while trying to setup Chromium. Resolve all issues and restart the process', error)
+        console.info('Process is successfully finished');
+    } catch (err) {
+        console.error('An error occurred while trying to setup Chromium. Resolve all issues and restart the process', err);
     }
 }
 

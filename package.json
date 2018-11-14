@@ -28,7 +28,15 @@
   "author": "Dmytro TOLSTYI <dmytro.tolstyi@gmail.com>",
   "license": "MIT",
   "xo": {
-    "space": 4
+    "space": 4,
+    "overrides": [
+      {
+        "files": "test-install.js",
+        "rules": {
+          "no-await-in-loop": "off"
+        }
+      }
+    ]
   },
   "dependencies": {
     "debug": "^4.1.0",

@@ -9,7 +9,10 @@ const debug = require('debug')('node-chromium');
 
 const utils = require('./utils');
 const config = require('./config');
-const install = async () => { await require('./install')};
+
+const install = async () => {
+    await require('./install');
+};
 
 test.before(t => {
     // Deleting output folder
@@ -45,7 +48,7 @@ test.serial('Different OS support', async t => {
 
     const originalPlatform = process.platform;
 
-    for (let platform of supportedPlatforms) {
+    for (const platform of supportedPlatforms) {
         mockPlatform(platform);
 
         const revision = await utils.getLatestRevisionNumber();
@@ -54,7 +57,7 @@ test.serial('Different OS support', async t => {
         t.true(await isUrlAccessible(url));
     }
 
-    for (let platform of notSupportedPlatforms) {
+    for (const platform of notSupportedPlatforms) {
         mockPlatform(platform);
 
         t.throws(() => {
@@ -64,15 +67,15 @@ test.serial('Different OS support', async t => {
 
     mockPlatform(originalPlatform);
 
-    t.pass()
+    t.pass();
 });
 
 async function isUrlAccessible(url) {
     try {
         const response = await got(url, {method: 'HEAD'});
         return /4\d\d/.test(response.statusCode) === false;
-    } catch (error) {
-        console.warn(`An error [${error.message}] occurred while trying to check URL [${url}] accessibility`)
+    } catch (err) {
+        console.warn(`An error [${err.message}] occurred while trying to check URL [${url}] accessibility`);
         return false;
     }
 }
