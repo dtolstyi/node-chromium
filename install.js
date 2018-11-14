@@ -50,7 +50,7 @@ function _downloadFile(url, destPath) {
 }
 
 function unzipArchive(archivePath, outputFolder) {
-    console.log('Started extracting archive', archivePath);
+    debug('Started extracting archive', archivePath);
 
     return new Promise((resolve, reject) => {
         extractZip(archivePath, {dir: outputFolder}, error => {
