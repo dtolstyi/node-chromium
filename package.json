@@ -33,7 +33,8 @@
       {
         "files": "test-install.js",
         "rules": {
-          "no-await-in-loop": "off"
+          "no-await-in-loop": "off",
+          "ava/prefer-async-await": "off"
         }
       }
     ]

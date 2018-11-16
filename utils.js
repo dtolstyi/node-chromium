@@ -95,8 +95,17 @@ module.exports = {
      *
      * @returns {Promise<String>}
      */
-    async getLatestRevisionNumber() {
-        const url = this.getOsCdnUrl() + '%2FLAST_CHANGE?alt=media';
-        return (await got(url)).body;
+    getLatestRevisionNumber() {
+        return new Promise((resolve, reject) => {
+            const url = this.getOsCdnUrl() + '%2FLAST_CHANGE?alt=media';
+            got(url)
+                .then(response => {
+                    resolve(response.body);
+                })
+                .catch(err => {
+                    console.error('An error occured while trying to retrieve latest revision number', err);
+                    reject(err);
+                });
+        });
     }
 };

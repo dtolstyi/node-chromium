@@ -13,7 +13,7 @@ function createTempFile() {
     return new Promise((resolve, reject) => {
         tmp.file((error, path) => {
             if (error) {
-                console.log('An error occured while trying to create temporary file', error);
+                console.error('An error occured while trying to create temporary file', error);
                 reject(error);
             } else {
                 resolve(path);
@@ -22,17 +22,19 @@ function createTempFile() {
     });
 }
 
-async function downloadChromiumRevision(revision) {
-    const tmpPath = await createTempFile();
+function downloadChromiumRevision(revision) {
+    return createTempFile()
+        .then(tmpFilePath => {
+            debug('Downloading Chromium archive from Google CDN');
+            const url = utils.getDownloadUrl(revision);
 
-    debug('Downloading Chromium archive from Google CDN');
-    const url = utils.getDownloadUrl(revision);
-
-    return _downloadFile(url, tmpPath);
+            return _downloadFile(url, tmpFilePath);
+        });
 }
 
 function _downloadFile(url, destPath) {
     return new Promise((resolve, reject) => {
+        console.info('Downloading Chromium archive from CDN (this process might take a while)');
         got.stream(url)
             .on('error', error => {
                 console.error('An error occurred while trying to download file', error.message);
@@ -65,21 +67,12 @@ function unzipArchive(archivePath, outputFolder) {
     });
 }
 
-async function install() {
-    try {
-        console.info('Step 1. Retrieving Chromium latest revision number');
-        const revision = await utils.getLatestRevisionNumber();
-
-        console.info('Step 2. Downloading Chromium (this might take a while)');
-        const tmpPath = await downloadChromiumRevision(revision);
-
-        console.info('Step 3. Setting up Chromium binaries');
-        await unzipArchive(tmpPath, config.BIN_OUT_PATH);
-
-        console.info('Process is successfully finished');
-    } catch (err) {
-        console.error('An error occurred while trying to setup Chromium. Resolve all issues and restart the process', err);
-    }
+function install() {
+    return utils.getLatestRevisionNumber()
+        .then(downloadChromiumRevision)
+        .then(downloadPath => unzipArchive(downloadPath, config.BIN_OUT_PATH))
+        .then(() => console.info('Process is successfully finished'))
+        .catch(err => console.error('An error occurred while trying to setup Chromium. Resolve all issues and restart the process', err));
 }
 
 module.exports = install();

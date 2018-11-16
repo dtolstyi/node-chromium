@@ -4,6 +4,7 @@ os:
   - linux
   - osx
 node_js:
+  - "6"
   - "7"
   - "8"
   - "9"
