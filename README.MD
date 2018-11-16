@@ -10,7 +10,7 @@ You can see full list of differences in [Fossbytes article](https://fossbytes.co
 
 ## Requirements
 `node-chromium 2.x.x` is tested against and supports Node.js 7+  
-If you need to use older versions of Node.js try `node-chromium 1.x.x` versions.
+If you need to use older versions of Node.js try `node-chromium 1.x.x` releases.
 
 ## Usage
 Depending on your needs, you can install module into **devDependencies** (`--save-dev`) or production **dependencies** (`--save`)
@@ -48,7 +48,6 @@ const chromium = require('chromium');
 require('chromedriver');
 
 async function start() {
-
     let options = new chrome.Options();
     options.setChromeBinaryPath(chromium.path);
     options.addArguments('--headless');
