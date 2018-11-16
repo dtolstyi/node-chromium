@@ -8,6 +8,10 @@
 The main benefit of using Chromium is that it **doesn't** include all the proprietary modifications made by Google, thus it's more lightweight and more suitable for automation purposes.  
 You can see full list of differences in [Fossbytes article](https://fossbytes.com/difference-google-chrome-vs-chromium-browser/).
 
+## Requirements
+`node-chromium 2.x.x` is tested against and supports Node.js 7+  
+If you need to use older versions of Node.js try `node-chromium 1.x.x` versions.
+
 ## Usage
 Depending on your needs, you can install module into **devDependencies** (`--save-dev`) or production **dependencies** (`--save`)
 
