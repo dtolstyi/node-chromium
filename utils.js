@@ -1,7 +1,7 @@
 'use strict';
 
 const path = require('path');
-const Url = require('url');
+const urlParser = require('url');
 const got = require('got');
 const tunnel = require('tunnel');
 
@@ -112,10 +112,10 @@ module.exports = {
         const proxy = url.startsWith('https://') ? process.env.npm_config_https_proxy : (process.env.npm_config_proxy || process.env.npm_config_http_proxy);
         if (proxy) {
             console.info('Using http(s) proxy server: ' + proxy);
-            const proxyUrl = new Url(proxy);
+            const proxyUrl = urlParser.parse(proxy);
             const tunnelOptions = {
                 proxy: {
-                    host: proxyUrl.host,
+                    host: proxyUrl.hostname,
                     port: proxyUrl.port
                 }
             };
