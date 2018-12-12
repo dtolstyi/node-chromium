@@ -30,6 +30,13 @@ execFile(chromium.path, ['https://google.com'], err => {
 });
 ```
 
+### Proxy Configuration
+When downloading the chromium binary **node-chromium** will use the proxy configured for `npm` to establish HTTP(S) connections. The proxy used by `npm` can be configured using 
+```
+npm config set proxy http://<username>:<password>@<the.proxy.hostname>:<port>
+npm config set https-proxy http://<username>:<password>@<the.proxy.hostname>:<port
+```
+
 ## Selenium WebDriver Headless (without UI) tests
 It's extremely easy to use **node-chromium** with **selenium-webdriver** to perform e2e tests without spawning browser UI.
 First, install all dependencies
@@ -75,6 +82,7 @@ async function takeScreenshot(driver, name) {
 
 start();
 ```
+## 
 
 ## License
 MIT
