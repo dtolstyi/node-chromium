@@ -31,7 +31,7 @@ execFile(chromium.path, ['https://google.com'], err => {
 ```
 
 ### Proxy Configuration
-When downloading the chromium binary **node-chromium** will use `npm`s configured proxy to establish HTTP(S) connections. The proxy used by `npm` can be configured using 
+When downloading the chromium binary **node-chromium** will use the proxy configured for `npm` to establish HTTP(S) connections. The proxy used by `npm` can be configured using 
 ```
 npm config set proxy http://<username>:<password>@<the.proxy.hostname>:<port>
 npm config set https-proxy http://<username>:<password>@<the.proxy.hostname>:<port
