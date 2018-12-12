@@ -42,7 +42,8 @@
     "debug": "^4.1.0",
     "extract-zip": "^1.6.7",
     "got": "^7.1.0",
-    "tmp": "0.0.33"
+    "tmp": "0.0.33",
+    "tunnel": "^0.0.6"
   },
   "devDependencies": {
     "ava": "^0.22.0",

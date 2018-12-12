@@ -33,7 +33,7 @@ async function downloadChromiumRevision(revision) {
 
 function _downloadFile(url, destPath) {
     return new Promise((resolve, reject) => {
-        got.stream(url)
+        got.stream(url, utils.getRequestOptions(url))
             .on('error', error => {
                 console.error('An error occurred while trying to download file', error.message);
                 reject(error);
