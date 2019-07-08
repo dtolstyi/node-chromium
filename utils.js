@@ -114,7 +114,7 @@ module.exports = {
         if (proxy) {
             const proxyUrl = urlParser.parse(proxy);
             const noProxy = (process.env.npm_config_no_proxy || process.env.NO_PROXY || '').split(',');
-            if (!noProxy.find(exc => proxyUrl.hostname.endsWith(exc))) {
+            if (noProxy.find(exc => proxyUrl.hostname.endsWith(exc)) !== undefined) {
                 console.info('Using http(s) proxy server: ' + proxy);
                 const tunnelOptions = {
                     proxy: {
