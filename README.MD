@@ -35,7 +35,10 @@ When downloading the chromium binary **node-chromium** will use the proxy config
 ```
 npm config set proxy http://<username>:<password>@<the.proxy.hostname>:<port>
 npm config set https-proxy http://<username>:<password>@<the.proxy.hostname>:<port
+npm config set no-proxy localhost,127.0.0.1,example.org
 ```
+
+Additionally proxy settings found in the environment variables `HTTP_PROXY`, `HTTPS_PROXY` and `NO_PROXY` will be used if they are not defined in the `.npmrc` file. 
 
 ## Selenium WebDriver Headless (without UI) tests
 It's extremely easy to use **node-chromium** with **selenium-webdriver** to perform e2e tests without spawning browser UI.
