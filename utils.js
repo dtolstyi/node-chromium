@@ -109,29 +109,33 @@ module.exports = {
      */
     getRequestOptions(url) {
         const requestOptions = {};
-        const proxy = url.startsWith('https://') ? process.env.npm_config_https_proxy : (process.env.npm_config_proxy || process.env.npm_config_http_proxy);
+        const proxy = url.startsWith('https://') ? (process.env.npm_config_https_proxy || process.env.HTTPS_PROXY) :
+            (process.env.npm_config_proxy || process.env.npm_config_http_proxy || process.env.HTTP_PROXY);
         if (proxy) {
-            console.info('Using http(s) proxy server: ' + proxy);
             const proxyUrl = urlParser.parse(proxy);
-            const tunnelOptions = {
-                proxy: {
-                    host: proxyUrl.hostname,
-                    port: proxyUrl.port
+            const noProxy = (process.env.npm_config_no_proxy || process.env.NO_PROXY || '').split(',');
+            if (noProxy.find(exc => proxyUrl.hostname.endsWith(exc)) !== undefined) {
+                console.info('Using http(s) proxy server: ' + proxy);
+                const tunnelOptions = {
+                    proxy: {
+                        host: proxyUrl.hostname,
+                        port: proxyUrl.port
+                    }
+                };
+                if (proxyUrl.username && proxyUrl.password) {
+                    tunnelOptions.proxy.proxyAuth = `${proxyUrl.username}:${proxyUrl.password}`;
                 }
-            };
-            if (proxyUrl.username && proxyUrl.password) {
-                tunnelOptions.proxy.proxyAuth = `${proxyUrl.username}:${proxyUrl.password}`;
-            }
-            if (url.startsWith('https://')) {
-                if (proxy.startsWith('https://')) {
-                    requestOptions.agent = tunnel.httpsOverHttps(tunnelOptions);
+                if (url.startsWith('https://')) {
+                    if (proxy.startsWith('https://')) {
+                        requestOptions.agent = tunnel.httpsOverHttps(tunnelOptions);
+                    } else {
+                        requestOptions.agent = tunnel.httpsOverHttp(tunnelOptions);
+                    }
+                } else if (proxy.startsWith('https://')) {
+                    requestOptions.agent = tunnel.httpOverHttps(tunnelOptions);
                 } else {
-                    requestOptions.agent = tunnel.httpsOverHttp(tunnelOptions);
+                    requestOptions.agent = tunnel.httpOverHttp(tunnelOptions);
                 }
-            } else if (proxy.startsWith('https://')) {
-                requestOptions.agent = tunnel.httpOverHttps(tunnelOptions);
-            } else {
-                requestOptions.agent = tunnel.httpOverHttp(tunnelOptions);
             }
         }
         return requestOptions;
