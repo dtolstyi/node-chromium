@@ -68,7 +68,7 @@ function unzipArchive(archivePath, outputFolder) {
 async function install() {
     try {
         console.info('Step 1. Retrieving Chromium revision number');
-		const revision = process.env.CHROMIUM_REVISION || await utils.getLatestRevisionNumber();
+        const revision = process.env.CHROMIUM_REVISION || await utils.getLatestRevisionNumber();
 
         console.info('Step 2. Downloading Chromium (this might take a while)');
         const tmpPath = await downloadChromiumRevision(revision);
