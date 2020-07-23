@@ -9,7 +9,7 @@ const debug = require('debug')('node-chromium');
 const config = require('./config');
 const utils = require('./utils');
 
-const chromiumRevision = process.env.CHROMIUM_REVISION;
+const chromiumRevision =  process.env.npm_config_chromium_revision || process.env.CHROMIUM_REVISION;
 
 function createTempFile() {
     return new Promise((resolve, reject) => {
