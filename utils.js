@@ -8,6 +8,7 @@ const tunnel = require('tunnel');
 const config = require('./config');
 
 const CDN_URL = 'https://www.googleapis.com/download/storage/v1/b/chromium-browser-snapshots/o/';
+const ALT_URL = process.env.CHROMIUM_DOWNLOAD_HOST;
 
 module.exports = {
     /**
@@ -60,16 +61,20 @@ module.exports = {
      * @returns {string}
      */
     getDownloadUrl(revision) {
-        return `${this.getOsCdnUrl()}%2F${revision}%2F${this.getOsChromiumFolderName()}.zip?alt=media`;
+        let revisionPath = `/${revision}/${this.getOsChromiumFolderName()}`;
+        if (!ALT_URL) {
+            revisionPath = encodeURIComponent(revisionPath);  // Needed for googleapis.com
+        }
+        return `${this.getOsCdnUrl()}${revisionPath}.zip?alt=media`;
     },
 
     /**
-     * Returns CDN Url according to current OS
+     * Returns download Url according to current OS
      *
      * @returns {string}
      */
     getOsCdnUrl() {
-        let url = CDN_URL;
+        let url = ALT_URL || CDN_URL;
 
         const platform = process.platform;
 
