@@ -9,12 +9,9 @@ const debug = require('debug')('node-chromium');
 
 const utils = require('./utils');
 const config = require('./config');
+const install = require('./install');
 
-const install = async () => {
-    await require('./install');
-};
-
-test.before(t => {
+test.beforeEach(t => {
     // Deleting output folder
     const outPath = config.BIN_OUT_PATH;
     debug(`Deleting output folder: [${outPath}]`);
@@ -22,6 +19,11 @@ test.before(t => {
     if (fs.existsSync(outPath)) {
         rimraf.sync(outPath);
     }
+
+    // Ensure a consistent, known environment for each test
+    process.env.CHROMIUM_DOWNLOAD_HOST = '';
+    process.env.CHROMIUM_REVISION = '';
+
     t.pass();
 });
 
@@ -29,12 +31,22 @@ test.serial('Canary Test', t => {
     t.pass();
 });
 
-test('Before Install Process', t => {
+test.serial('Before Install Process', t => {
     const binPath = utils.getOsChromiumBinPath();
     t.false(fs.existsSync(binPath), `Chromium binary is found in: [${binPath}]`);
 });
 
-test('Chromium Install', async t => {
+test.serial('Chromium Install', async t => {
+    await install();
+
+    const binPath = utils.getOsChromiumBinPath();
+    const isExists = fs.existsSync(binPath);
+    t.true(isExists, `Chromium binary is not found in: [${binPath}]`);
+});
+
+test.serial('Chromium Install from Mirror', async t => {
+    process.env.CHROMIUM_DOWNLOAD_HOST = 'https://npm.taobao.org/mirrors/chromium-browser-snapshots/';
+    process.env.CHROMIUM_REVISION = '737027';
     await install();
 
     const binPath = utils.getOsChromiumBinPath();
