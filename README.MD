@@ -41,9 +41,17 @@ npm config set no-proxy localhost,127.0.0.1,example.org
 Additionally proxy settings found in the environment variables `HTTP_PROXY`, `HTTPS_PROXY` and `NO_PROXY` will be used if they are not defined in the `.npmrc` file. 
 
 ### Install a concrete revision
-If you want to specify the revision of Chromium to be installed, just set the environment variable CHROMIUM_REVISION to the number of the revision you want to install, as in:
+If you want to specify the revision of Chromium to be installed, just set the environment variable `CHROMIUM_REVISION` to the number of the revision you want to install, as in:
 ```shell script
 export CHROMIUM_REVISION=729994
+```
+
+### Use a Download Mirror
+You may download a specific revision from an alternate download host using the environment variable `CHROMIUM_DOWNLOAD_HOST`, for example:
+
+```bash
+export CHROMIUM_REVISION=737027
+export CHROMIUM_DOWNLOAD_HOST=https://npm.taobao.org/mirrors/chromium-browser-snapshots/
 ```
 
 ## Selenium WebDriver Headless (without UI) tests
