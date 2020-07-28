@@ -37,21 +37,13 @@ test.serial('Before Install Process', t => {
 });
 
 test.serial('Chromium Install', async t => {
-    await install();
-
-    const binPath = utils.getOsChromiumBinPath();
-    const isExists = fs.existsSync(binPath);
-    t.true(isExists, `Chromium binary is not found in: [${binPath}]`);
+    await installChromeAndVerify(t);
 });
 
 test.serial('Chromium Install from Mirror', async t => {
     process.env.CHROMIUM_DOWNLOAD_HOST = 'https://npm.taobao.org/mirrors/chromium-browser-snapshots/';
     process.env.CHROMIUM_REVISION = '737027';
-    await install();
-
-    const binPath = utils.getOsChromiumBinPath();
-    const isExists = fs.existsSync(binPath);
-    t.true(isExists, `Chromium binary is not found in: [${binPath}]`);
+    await installChromeAndVerify(t);
 });
 
 test.serial('Different OS support', async t => {
@@ -96,4 +88,15 @@ function mockPlatform(newPlatformValue) {
     Object.defineProperty(process, 'platform', {
         value: newPlatformValue
     });
+}
+/**
+ * Helper for Chromium installation tests.
+ * @param t Test engine API object.
+ */
+async function installChromeAndVerify(t) {
+    await install();
+
+    const binPath = utils.getOsChromiumBinPath();
+    const isExists = fs.existsSync(binPath);
+    t.true(isExists, `Chromium binary is not found in: [${binPath}]`);
 }

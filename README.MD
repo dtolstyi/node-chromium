@@ -52,7 +52,15 @@ You may download a specific revision from an alternate download host using the e
 ```bash
 export CHROMIUM_REVISION=737027
 export CHROMIUM_DOWNLOAD_HOST=https://npm.taobao.org/mirrors/chromium-browser-snapshots/
+
+# If running on Linux x64 this will download binary from:
+# https://npm.taobao.org/mirrors/chromium-browser-snapshots/Linux_x64/737027/chrome-linux.zip?alt=media
 ```
+
+Notes on `CHROMIUM_DOWNLOAD_HOST`:
+
+* The default download host is `https://www.googleapis.com/download/storage/v1/b/chromium-browser-snapshots/o/`
+* Mirrors are expected to host binaries in the structure: `<CHROMIUM_DOWNLOAD_HOST>/<PLATFORM_ARCHITECTURE>/<REVISION>/<OS_CHROMIUM_FILE_NAME>.zip?alt=media` for example see the taobao mirror [chromium-browser-snapshots](https://npm.taobao.org/mirrors/chromium-browser-snapshots/).
 
 ## Selenium WebDriver Headless (without UI) tests
 It's extremely easy to use **node-chromium** with **selenium-webdriver** to perform e2e tests without spawning browser UI.
