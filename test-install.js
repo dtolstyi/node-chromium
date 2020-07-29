@@ -20,9 +20,8 @@ test.beforeEach(t => {
         rimraf.sync(outPath);
     }
 
-    // Ensure a consistent, known environment for each test
-    process.env.CHROMIUM_DOWNLOAD_HOST = '';
-    process.env.CHROMIUM_REVISION = '';
+    // Ensure a consistent, known environment reset for each test
+    config._setEnv({});
 
     t.pass();
 });
@@ -40,9 +39,11 @@ test.serial('Chromium Install', async t => {
     await installChromeAndVerify(t);
 });
 
-test.serial('Chromium Install from Mirror', async t => {
-    process.env.CHROMIUM_DOWNLOAD_HOST = 'https://npm.taobao.org/mirrors/chromium-browser-snapshots/';
-    process.env.CHROMIUM_REVISION = '737027';
+test.serial('Chromium Install from Mirror using Environment variables', async t => {
+    config._setEnv({
+        CHROMIUM_DOWNLOAD_HOST: 'https://npm.taobao.org/mirrors/chromium-browser-snapshots/',
+        CHROMIUM_REVISION: '508693'
+    });
     await installChromeAndVerify(t);
 });
 

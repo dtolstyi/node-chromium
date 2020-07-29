@@ -46,6 +46,12 @@ If you want to specify the revision of Chromium to be installed, just set the en
 export CHROMIUM_REVISION=729994
 ```
 
+Note - may also be set in .npmrc like so:
+
+```ini
+chromium_revision=729994
+```
+
 ### Use a Download Mirror
 You may download a specific revision from an alternate download host using the environment variable `CHROMIUM_DOWNLOAD_HOST`, for example:
 
@@ -61,6 +67,12 @@ Notes on `CHROMIUM_DOWNLOAD_HOST`:
 
 * The default download host is `https://www.googleapis.com/download/storage/v1/b/chromium-browser-snapshots/o/`
 * Mirrors are expected to host binaries in the structure: `<CHROMIUM_DOWNLOAD_HOST>/<PLATFORM_ARCHITECTURE>/<REVISION>/<OS_CHROMIUM_FILE_NAME>.zip?alt=media` for example see the taobao mirror [chromium-browser-snapshots](https://npm.taobao.org/mirrors/chromium-browser-snapshots/).
+* May also be set in .npmrc like so:
+
+```ini
+chromium_download_host=https://npm.taobao.org/mirrors/chromium-browser-snapshots/
+chromium_revision=737027
+```
 
 ## Selenium WebDriver Headless (without UI) tests
 It's extremely easy to use **node-chromium** with **selenium-webdriver** to perform e2e tests without spawning browser UI.

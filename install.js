@@ -66,7 +66,7 @@ function unzipArchive(archivePath, outputFolder) {
 }
 
 async function install() {
-    const chromiumRevision =  process.env.npm_config_chromium_revision || process.env.CHROMIUM_REVISION;
+    const chromiumRevision = config.getEnvVar('CHROMIUM_REVISION');
     try {
         console.info('Step 1. Retrieving Chromium latest revision number');
         const revision = chromiumRevision || await utils.getLatestRevisionNumber();
