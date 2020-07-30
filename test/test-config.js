@@ -1,13 +1,13 @@
 'use strict';
 
-import test from 'ava';
+const test = require('ava');
 
 const config = require('../config');
 
 /* eslint camelcase: ["error", {properties: "never"}] */
 
 test.serial('getEnvVar returns string always', t => {
-    delete process.env.FOO_BAR;  // Make sure this doesn't exist
+    delete process.env.FOO_BAR; // Make sure this doesn't exist
     t.is('', config.getEnvVar('FOO_BAR'));
 });
 

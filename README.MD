@@ -9,7 +9,9 @@ The main benefit of using Chromium is that it **doesn't** include all the propri
 You can see full list of differences in [Fossbytes article](https://fossbytes.com/difference-google-chrome-vs-chromium-browser/).
 
 ## Requirements
-`node-chromium 2.x.x` is tested against and supports Node.js 7+  
+
+`node-chromium 2.2.x+` is tested against and supports Node.js LTS and latest stable releases  
+`node-chromium 2.1.2-` is tested against and supports Node.js 7+  
 If you need to use older versions of Node.js try `node-chromium 1.x.x` releases.
 
 ## Usage

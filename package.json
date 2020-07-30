@@ -27,27 +27,22 @@
   ],
   "author": "Dmytro TOLSTYI <dmytro.tolstyi@gmail.com>",
   "license": "MIT",
+  "ava": {
+    "timeout": "15m"
+  },
   "xo": {
-    "space": 4,
-    "overrides": [
-      {
-        "files": "test-install.js",
-        "rules": {
-          "no-await-in-loop": "off"
-        }
-      }
-    ]
+    "space": 4
   },
   "dependencies": {
     "debug": "^4.1.0",
-    "extract-zip": "^1.6.7",
+    "extract-zip": "^1.7.0",
     "got": "^7.1.0",
     "tmp": "0.0.33",
     "tunnel": "^0.0.6"
   },
   "devDependencies": {
-    "ava": "^0.22.0",
-    "rimraf": "^2.6.2",
-    "xo": "^0.18.2"
+    "ava": "^3.11.0",
+    "rimraf": "^2.7.1",
+    "xo": "^0.32.1"
   }
 }

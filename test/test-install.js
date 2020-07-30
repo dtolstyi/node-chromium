@@ -1,6 +1,6 @@
 'use strict';
 
-import test from 'ava';
+const test = require('ava');
 
 const fs = require('fs');
 const rimraf = require('rimraf');
@@ -19,6 +19,7 @@ test.before(t => {
     if (fs.existsSync(outPath)) {
         rimraf.sync(outPath);
     }
+
     t.pass();
 });
 
@@ -33,7 +34,6 @@ test.serial('Before Install Process', t => {
 
 test.serial('Chromium Install', async t => {
     await install();
-
     const binPath = utils.getOsChromiumBinPath();
     const isExists = fs.existsSync(binPath);
     t.true(isExists, `Chromium binary is not found in: [${binPath}]`);
@@ -61,7 +61,7 @@ test.serial('Different OS support', async t => {
 
         t.throws(() => {
             utils.getDownloadUrl();
-        }, 'Unsupported platform');
+        }, {message: 'Unsupported platform'});
     }
 
     mockPlatform(originalPlatform);
@@ -73,8 +73,8 @@ async function isUrlAccessible(url) {
     try {
         const response = await got(url, {method: 'HEAD'});
         return /4\d\d/.test(response.statusCode) === false;
-    } catch (err) {
-        console.warn(`An error [${err.message}] occurred while trying to check URL [${url}] accessibility`);
+    } catch (error) {
+        console.warn(`An error [${error.message}] occurred while trying to check URL [${url}] accessibility`);
         return false;
     }
 }

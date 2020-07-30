@@ -9,6 +9,8 @@ const debug = require('debug')('node-chromium');
 const config = require('./config');
 const utils = require('./utils');
 
+/* eslint unicorn/prevent-abbreviations: ["off"] */
+
 function createTempFile() {
     return new Promise((resolve, reject) => {
         tmp.file((error, path) => {
@@ -78,8 +80,8 @@ async function install() {
         await unzipArchive(tmpPath, config.BIN_OUT_PATH);
 
         console.info('Process is successfully finished');
-    } catch (err) {
-        console.error('An error occurred while trying to setup Chromium. Resolve all issues and restart the process', err);
+    } catch (error) {
+        console.error('An error occurred while trying to setup Chromium. Resolve all issues and restart the process', error);
     }
 }
 

@@ -22,6 +22,7 @@ module.exports = {
         if (!name) {
             return '';
         }
+
         return process.env[`npm_config_${name.toLowerCase()}`] || process.env[name] || '';
     }
 };

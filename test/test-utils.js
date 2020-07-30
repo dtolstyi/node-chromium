@@ -1,6 +1,6 @@
 'use strict';
 
-import test from 'ava';
+const test = require('ava');
 
 const config = require('../config');
 const utils = require('../utils');
@@ -10,7 +10,7 @@ const OVERRIDE_URL = 'http://example.com/chromium-browser-snapshots/';
 /* eslint camelcase: ["error", {properties: "never"}] */
 
 test.beforeEach(t => {
-    process.env = {};  // Prevent the real environment from interfering with these tests
+    process.env = {}; // Prevent the real environment from interfering with these tests
     t.pass();
 });
 

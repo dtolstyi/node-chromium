@@ -1,7 +1,6 @@
 'use strict';
 
 const path = require('path');
-const urlParser = require('url');
 const got = require('got');
 const tunnel = require('tunnel');
 
@@ -61,8 +60,9 @@ module.exports = {
         const altUrl = config.getEnvVar('CHROMIUM_DOWNLOAD_HOST');
         let revisionPath = `/${revision}/${this.getOsChromiumFolderName()}`;
         if (!altUrl) {
-            revisionPath = encodeURIComponent(revisionPath);  // Needed for googleapis.com
+            revisionPath = encodeURIComponent(revisionPath); // Needed for googleapis.com
         }
+
         return `${this.getOsCdnUrl()}${revisionPath}.zip?alt=media`;
     },
 
@@ -115,7 +115,7 @@ module.exports = {
         const proxy = url.startsWith('https://') ? (process.env.npm_config_https_proxy || process.env.HTTPS_PROXY) :
             (process.env.npm_config_proxy || process.env.npm_config_http_proxy || process.env.HTTP_PROXY);
         if (proxy) {
-            const proxyUrl = urlParser.parse(proxy);
+            const proxyUrl = new URL(proxy);
             const noProxy = (process.env.npm_config_no_proxy || process.env.NO_PROXY || '').split(',');
             if (noProxy.find(exc => proxyUrl.hostname.endsWith(exc)) !== undefined) {
                 console.info('Using http(s) proxy server: ' + proxy);
@@ -128,6 +128,7 @@ module.exports = {
                 if (proxyUrl.username && proxyUrl.password) {
                     tunnelOptions.proxy.proxyAuth = `${proxyUrl.username}:${proxyUrl.password}`;
                 }
+
                 if (url.startsWith('https://')) {
                     if (proxy.startsWith('https://')) {
                         requestOptions.agent = tunnel.httpsOverHttps(tunnelOptions);
@@ -141,6 +142,7 @@ module.exports = {
                 }
             }
         }
+
         return requestOptions;
     }
 };
