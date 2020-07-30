@@ -7,12 +7,9 @@ const rimraf = require('rimraf');
 const got = require('got');
 const debug = require('debug')('node-chromium');
 
-const utils = require('./utils');
-const config = require('./config');
-
-const install = async () => {
-    await require('./install');
-};
+const utils = require('../utils');
+const config = require('../config');
+const install = require('../install');
 
 test.before(t => {
     // Deleting output folder
@@ -29,12 +26,12 @@ test.serial('Canary Test', t => {
     t.pass();
 });
 
-test('Before Install Process', t => {
+test.serial('Before Install Process', t => {
     const binPath = utils.getOsChromiumBinPath();
     t.false(fs.existsSync(binPath), `Chromium binary is found in: [${binPath}]`);
 });
 
-test('Chromium Install', async t => {
+test.serial('Chromium Install', async t => {
     await install();
 
     const binPath = utils.getOsChromiumBinPath();
@@ -48,6 +45,7 @@ test.serial('Different OS support', async t => {
 
     const originalPlatform = process.platform;
 
+    /* eslint-disable no-await-in-loop */
     for (const platform of supportedPlatforms) {
         mockPlatform(platform);
 
@@ -56,6 +54,7 @@ test.serial('Different OS support', async t => {
         const url = utils.getDownloadUrl(revision);
         t.true(await isUrlAccessible(url));
     }
+    /* eslint-enable no-await-in-loop */
 
     for (const platform of notSupportedPlatforms) {
         mockPlatform(platform);

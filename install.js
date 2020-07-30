@@ -9,8 +9,6 @@ const debug = require('debug')('node-chromium');
 const config = require('./config');
 const utils = require('./utils');
 
-const chromiumRevision =  process.env.npm_config_chromium_revision || process.env.CHROMIUM_REVISION;
-
 function createTempFile() {
     return new Promise((resolve, reject) => {
         tmp.file((error, path) => {
@@ -68,8 +66,9 @@ function unzipArchive(archivePath, outputFolder) {
 }
 
 async function install() {
+    const chromiumRevision = config.getEnvVar('CHROMIUM_REVISION');
     try {
-        console.info('Step 1. Retrieving Chromium latest revision number');
+        console.info('Step 1. Retrieving Chromium revision number');
         const revision = chromiumRevision || await utils.getLatestRevisionNumber();
 
         console.info(`Step 2. Downloading Chromium (this might take a while). Revision number: ${revision}`);
@@ -84,4 +83,9 @@ async function install() {
     }
 }
 
-module.exports = install();
+if (require.main === module) {
+    // Module called directly, not via "require", so execute install...
+    install();
+}
+
+module.exports = install;

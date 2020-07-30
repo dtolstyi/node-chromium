@@ -41,9 +41,37 @@ npm config set no-proxy localhost,127.0.0.1,example.org
 Additionally proxy settings found in the environment variables `HTTP_PROXY`, `HTTPS_PROXY` and `NO_PROXY` will be used if they are not defined in the `.npmrc` file. 
 
 ### Install a concrete revision
-If you want to specify the revision of Chromium to be installed, just set the environment variable CHROMIUM_REVISION to the number of the revision you want to install, as in:
+If you want to specify the revision of Chromium to be installed, just set the environment variable `CHROMIUM_REVISION` to the number of the revision you want to install, as in:
 ```shell script
 export CHROMIUM_REVISION=729994
+```
+
+Note - may also be set in .npmrc like so:
+
+```ini
+chromium_revision=729994
+```
+
+### Use a Download Mirror
+You may download a specific revision from an alternate download host using the environment variable `CHROMIUM_DOWNLOAD_HOST`, for example:
+
+```bash
+export CHROMIUM_REVISION=737027
+export CHROMIUM_DOWNLOAD_HOST=https://npm.taobao.org/mirrors/chromium-browser-snapshots/
+
+# If running on Linux x64 this will download binary from:
+# https://npm.taobao.org/mirrors/chromium-browser-snapshots/Linux_x64/737027/chrome-linux.zip?alt=media
+```
+
+Notes on `CHROMIUM_DOWNLOAD_HOST`:
+
+* The default download host is `https://www.googleapis.com/download/storage/v1/b/chromium-browser-snapshots/o/`
+* Mirrors are expected to host binaries in the structure: `<CHROMIUM_DOWNLOAD_HOST>/<PLATFORM_ARCHITECTURE>/<REVISION>/<OS_CHROMIUM_FILE_NAME>.zip?alt=media` for example see the taobao mirror [chromium-browser-snapshots](https://npm.taobao.org/mirrors/chromium-browser-snapshots/).
+* May also be set in .npmrc like so:
+
+```ini
+chromium_download_host=https://npm.taobao.org/mirrors/chromium-browser-snapshots/
+chromium_revision=737027
 ```
 
 ## Selenium WebDriver Headless (without UI) tests
