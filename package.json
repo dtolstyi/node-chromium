@@ -1,6 +1,6 @@
 {
   "name": "chromium",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "Chromium binaries for Node.js projects",
   "repository": "dtolstyi/node-chromium",
   "main": "index.js",

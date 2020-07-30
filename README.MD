@@ -10,8 +10,8 @@ You can see full list of differences in [Fossbytes article](https://fossbytes.co
 
 ## Requirements
 
-`node-chromium 2.2.x+` is tested against and supports Node.js LTS and latest stable releases  
-`node-chromium 2.1.2-` is tested against and supports Node.js 7+  
+Starting from version `2.2.0` `node-chromium` is tested against and supports Node.js LTS and latest stable releases  
+Versions `2.0.0` - `2.1.2` support Node.js 7+  
 If you need to use older versions of Node.js try `node-chromium 1.x.x` releases.
 
 ## Usage
