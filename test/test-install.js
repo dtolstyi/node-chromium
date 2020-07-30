@@ -7,11 +7,11 @@ const rimraf = require('rimraf');
 const got = require('got');
 const debug = require('debug')('node-chromium');
 
-const utils = require('./utils');
-const config = require('./config');
-const install = require('./install');
+const utils = require('../utils');
+const config = require('../config');
+const install = require('../install');
 
-test.beforeEach(t => {
+test.before(t => {
     // Deleting output folder
     const outPath = config.BIN_OUT_PATH;
     debug(`Deleting output folder: [${outPath}]`);
@@ -19,10 +19,6 @@ test.beforeEach(t => {
     if (fs.existsSync(outPath)) {
         rimraf.sync(outPath);
     }
-
-    // Ensure a consistent, known environment reset for each test
-    config._setEnv({});
-
     t.pass();
 });
 
@@ -36,15 +32,11 @@ test.serial('Before Install Process', t => {
 });
 
 test.serial('Chromium Install', async t => {
-    await installChromeAndVerify(t);
-});
+    await install();
 
-test.serial('Chromium Install from Mirror using Environment variables', async t => {
-    config._setEnv({
-        CHROMIUM_DOWNLOAD_HOST: 'https://npm.taobao.org/mirrors/chromium-browser-snapshots/',
-        CHROMIUM_REVISION: '508693'
-    });
-    await installChromeAndVerify(t);
+    const binPath = utils.getOsChromiumBinPath();
+    const isExists = fs.existsSync(binPath);
+    t.true(isExists, `Chromium binary is not found in: [${binPath}]`);
 });
 
 test.serial('Different OS support', async t => {
@@ -53,6 +45,7 @@ test.serial('Different OS support', async t => {
 
     const originalPlatform = process.platform;
 
+    /* eslint-disable no-await-in-loop */
     for (const platform of supportedPlatforms) {
         mockPlatform(platform);
 
@@ -61,6 +54,7 @@ test.serial('Different OS support', async t => {
         const url = utils.getDownloadUrl(revision);
         t.true(await isUrlAccessible(url));
     }
+    /* eslint-enable no-await-in-loop */
 
     for (const platform of notSupportedPlatforms) {
         mockPlatform(platform);
@@ -89,15 +83,4 @@ function mockPlatform(newPlatformValue) {
     Object.defineProperty(process, 'platform', {
         value: newPlatformValue
     });
-}
-/**
- * Helper for Chromium installation tests.
- * @param t Test engine API object.
- */
-async function installChromeAndVerify(t) {
-    await install();
-
-    const binPath = utils.getOsChromiumBinPath();
-    const isExists = fs.existsSync(binPath);
-    t.true(isExists, `Chromium binary is not found in: [${binPath}]`);
 }

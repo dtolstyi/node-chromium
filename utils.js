@@ -7,8 +7,6 @@ const tunnel = require('tunnel');
 
 const config = require('./config');
 
-const CDN_URL = 'https://www.googleapis.com/download/storage/v1/b/chromium-browser-snapshots/o/';
-
 module.exports = {
     /**
      * Returns chromium output folder name for current OS
@@ -74,7 +72,7 @@ module.exports = {
      * @returns {string}
      */
     getOsCdnUrl() {
-        let url = config.getEnvVar('CHROMIUM_DOWNLOAD_HOST') || CDN_URL;
+        let url = config.getEnvVar('CHROMIUM_DOWNLOAD_HOST') || config.CDN_URL;
 
         const platform = process.platform;
 

@@ -38,13 +38,6 @@
       }
     ]
   },
-  "ava": {
-    "files": [
-      "test-install.js",
-      "test-config.js",
-      "test-utils.js"
-    ]
-  },
   "dependencies": {
     "debug": "^4.1.0",
     "extract-zip": "^1.6.7",

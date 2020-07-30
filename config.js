@@ -2,17 +2,14 @@
 
 const path = require('path');
 
-let environment = process.env;
-
 module.exports = {
     /**
-     * Set an alternative "env" object. If not set will use process.env.
-     * This is intended for mocking out the env in unit tests.
-     * @param env Object exposing key/value pairs of environment variables. Pass a falsey value to unset.
+     * The default CDN URL, used if not overridden by user
      */
-    _setEnv: env => {
-        environment = env || process.env;
-    },
+    CDN_URL: 'https://www.googleapis.com/download/storage/v1/b/chromium-browser-snapshots/o/',
+    /**
+     * The default filesystem path where chromium will be installed.
+     */
     BIN_OUT_PATH: path.join(__dirname, 'lib', 'chromium'),
     /**
      * Gets a configuration parameter from the environment.
@@ -25,12 +22,6 @@ module.exports = {
         if (!name) {
             return '';
         }
-        const npmConfigKey = `npm_config_${name.toLowerCase()}`;
-        let result = environment[npmConfigKey];
-        if (result) {
-            return result;
-        }
-        result = environment[name] || '';
-        return result;
+        return process.env[`npm_config_${name.toLowerCase()}`] || process.env[name] || '';
     }
 };
