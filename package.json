@@ -38,12 +38,12 @@
     "debug": "^4.1.0",
     "extract-zip": "^1.7.0",
     "got": "^7.1.0",
+    "rimraf": "^2.7.1",
     "tmp": "0.0.33",
     "tunnel": "^0.0.6"
   },
   "devDependencies": {
     "ava": "^3.11.0",
-    "rimraf": "^2.7.1",
     "xo": "^0.32.1"
   }
 }

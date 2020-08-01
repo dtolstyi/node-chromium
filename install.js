@@ -5,6 +5,7 @@ const extractZip = require('extract-zip');
 const got = require('got');
 const tmp = require('tmp');
 const debug = require('debug')('node-chromium');
+const rimraf = require('rimraf');
 
 const config = require('./config');
 const utils = require('./utils');
@@ -66,14 +67,16 @@ function unzipArchive(archivePath, outputFolder) {
     debug('Started extracting archive', archivePath);
 
     return new Promise((resolve, reject) => {
-        extractZip(archivePath, {dir: outputFolder}, error => {
-            if (error) {
-                console.error('An error occurred while trying to extract archive', error);
-                reject(error);
-            } else {
-                debug('Archive was successfully extracted');
-                resolve(true);
-            }
+        rimraf(outputFolder, () => {
+            extractZip(archivePath, {dir: outputFolder}, error => {
+                if (error) {
+                    console.error('An error occurred while trying to extract archive', error);
+                    reject(error);
+                } else {
+                    debug('Archive was successfully extracted');
+                    resolve(true);
+                }
+            });
         });
     });
 }
