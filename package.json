@@ -15,6 +15,7 @@
     "test-only": "ava --verbose"
   },
   "files": [
+    "cache.js",
     "config.js",
     "index.js",
     "install.js",

@@ -40,7 +40,22 @@ npm config set https-proxy http://<username>:<password>@<the.proxy.hostname>:<po
 npm config set no-proxy localhost,127.0.0.1,example.org
 ```
 
-Additionally proxy settings found in the environment variables `HTTP_PROXY`, `HTTPS_PROXY` and `NO_PROXY` will be used if they are not defined in the `.npmrc` file. 
+Additionally proxy settings found in the environment variables `HTTP_PROXY`, `HTTPS_PROXY` and `NO_PROXY` will be used if they are not defined in the `.npmrc` file.
+
+### Cache Downloaded Binaries
+By default downloaded chromium binaries are not cached on the filesystem. You may enable caching by setting the `CHROMIUM_CACHE` environment variable to a directory path, for example:
+
+```bash
+export CHROMIUM_CACHE=/path/to/cache/rootdir/
+```
+
+Or in .npmrc like so:
+
+```ini
+chromium_cache=/path/to/cache/rootdir/
+```
+
+If the same revision is needed again it will be fetched from cache instead of downloaded.
 
 ### Install a concrete revision
 If you want to specify the revision of Chromium to be installed, just set the environment variable `CHROMIUM_REVISION` to the number of the revision you want to install, as in:

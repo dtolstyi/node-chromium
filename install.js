@@ -8,6 +8,7 @@ const debug = require('debug')('node-chromium');
 
 const config = require('./config');
 const utils = require('./utils');
+const cache = require('./cache');
 
 /* eslint unicorn/prevent-abbreviations: ["off"] */
 
@@ -26,11 +27,21 @@ function createTempFile() {
 
 async function downloadChromiumRevision(revision) {
     const tmpPath = await createTempFile();
+    const cacheEntry = cache.match(revision);
+    if (cacheEntry) {
+        debug('Found Chromium archive in cache, skipping download');
+        fs.copyFileSync(cacheEntry, tmpPath);
+
+        return Promise.resolve(tmpPath);
+    }
 
     debug('Downloading Chromium archive from Google CDN');
     const url = utils.getDownloadUrl(revision);
 
-    return _downloadFile(url, tmpPath);
+    return _downloadFile(url, tmpPath).then(destPath => {
+        cache.put(revision, destPath);
+        return destPath;
+    });
 }
 
 function _downloadFile(url, destPath) {

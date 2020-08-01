@@ -7,6 +7,7 @@ const rimraf = require('rimraf');
 const got = require('got');
 const debug = require('debug')('node-chromium');
 
+const testUtils = require('./_utils');
 const utils = require('../utils');
 const config = require('../config');
 const install = require('../install');
@@ -20,6 +21,11 @@ test.before(t => {
         rimraf.sync(outPath);
     }
 
+    t.pass();
+});
+
+test.afterEach(t => {
+    testUtils.clearMocks();
     t.pass();
 });
 
@@ -43,11 +49,9 @@ test.serial('Different OS support', async t => {
     const supportedPlatforms = ['darwin', 'linux', 'win32'];
     const notSupportedPlatforms = ['aix', 'freebsd', 'openbsd', 'sunos'];
 
-    const originalPlatform = process.platform;
-
     /* eslint-disable no-await-in-loop */
     for (const platform of supportedPlatforms) {
-        mockPlatform(platform);
+        testUtils.mockPlatform(platform);
 
         const revision = await utils.getLatestRevisionNumber();
 
@@ -57,14 +61,12 @@ test.serial('Different OS support', async t => {
     /* eslint-enable no-await-in-loop */
 
     for (const platform of notSupportedPlatforms) {
-        mockPlatform(platform);
+        testUtils.mockPlatform(platform);
 
         t.throws(() => {
             utils.getDownloadUrl();
         }, {message: 'Unsupported platform'});
     }
-
-    mockPlatform(originalPlatform);
 
     t.pass();
 });
@@ -77,10 +79,4 @@ async function isUrlAccessible(url) {
         console.warn(`An error [${error.message}] occurred while trying to check URL [${url}] accessibility`);
         return false;
     }
-}
-
-function mockPlatform(newPlatformValue) {
-    Object.defineProperty(process, 'platform', {
-        value: newPlatformValue
-    });
 }
