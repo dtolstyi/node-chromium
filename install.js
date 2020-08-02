@@ -1,5 +1,6 @@
 'use strict';
 
+const path = require('path');
 const fs = require('fs');
 const extractZip = require('extract-zip');
 const got = require('got');
@@ -67,7 +68,8 @@ function unzipArchive(archivePath, outputFolder) {
     debug('Started extracting archive', archivePath);
 
     return new Promise((resolve, reject) => {
-        rimraf(outputFolder, () => {
+        const osOutputFolder = path.join(outputFolder, utils.getOsChromiumFolderName());
+        rimraf(osOutputFolder, () => {
             extractZip(archivePath, {dir: outputFolder}, error => {
                 if (error) {
                     console.error('An error occurred while trying to extract archive', error);
