@@ -43,19 +43,33 @@ npm config set no-proxy localhost,127.0.0.1,example.org
 Additionally proxy settings found in the environment variables `HTTP_PROXY`, `HTTPS_PROXY` and `NO_PROXY` will be used if they are not defined in the `.npmrc` file.
 
 ### Cache Downloaded Binaries
-By default downloaded chromium binaries are not cached on the filesystem. You may enable caching by setting the `CHROMIUM_CACHE` environment variable to a directory path, for example:
+By default downloaded chromium binaries are cached in a local directory which varies by operating system:
+
+* Linux: `XDG_CACHE_HOME` or ~/.cache/node-chromium/
+* macOS: ~/Library/Caches/node-chromium/
+* Windows: `LOCALAPPDATA`/node-chromium/Cache or ~/AppData/Local/node-chromium/Cache/
+* Anything else: ~/.node-chromium/
+
+You may manually add chromium archives here to avoid making network requests at all, the format of a cache entry is: `chromium-${revision}-${platform}-${arch}.zip`
+For example on macOS: `chromium-641577-darwin-x64.zip`
+
+You may override the cache path by setting the `CHROMIUM_CACHE` environment variable to a directory path, for example:
 
 ```bash
-export CHROMIUM_CACHE=/path/to/cache/rootdir/
+export CHROMIUM_CACHE=/path/to/cache/dir/
+
+# or in .npmrc like so:
+# chromium_cache=/path/to/cache/dir/
 ```
 
-Or in .npmrc like so:
+You may disable caching by setting `CHROMIUM_CACHE_SKIP` to `true`:
 
-```ini
-chromium_cache=/path/to/cache/rootdir/
+```bash
+export CHROMIUM_CACHE_SKIP=true
+
+# or in .npmrc like so:
+# chromium_cache_skip=true
 ```
-
-If the same revision is needed again it will be fetched from cache instead of downloaded.
 
 ### Install a concrete revision
 If you want to specify the revision of Chromium to be installed, just set the environment variable `CHROMIUM_REVISION` to the number of the revision you want to install, as in:

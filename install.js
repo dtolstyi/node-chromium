@@ -27,22 +27,25 @@ function createTempFile() {
     });
 }
 
+/**
+ * Downloads the Chromium archive from the default CDN or mirror if configured.
+ * If the required archive is retrieved from the cache directory then the download will be skipped.
+ * @param {string} revision The Chromium revision to download.
+ */
 async function downloadChromiumRevision(revision) {
-    const tmpPath = await createTempFile();
-    const cacheEntry = cache.match(revision);
+    const cacheEntry = cache.get(revision);
     if (cacheEntry) {
         debug('Found Chromium archive in cache, skipping download');
-        fs.copyFileSync(cacheEntry, tmpPath);
 
-        return Promise.resolve(tmpPath);
+        return Promise.resolve(cacheEntry);
     }
 
     debug('Downloading Chromium archive from Google CDN');
     const url = utils.getDownloadUrl(revision);
-
-    return _downloadFile(url, tmpPath).then(destPath => {
-        cache.put(revision, destPath);
-        return destPath;
+    const tmpPath = await createTempFile();
+    return _downloadFile(url, tmpPath).then(tmpPath => {
+        cache.put(revision, tmpPath);
+        return tmpPath;
     });
 }
 
@@ -90,10 +93,10 @@ async function install() {
         const revision = chromiumRevision || await utils.getLatestRevisionNumber();
 
         console.info(`Step 2. Downloading Chromium (this might take a while). Revision number: ${revision}`);
-        const tmpPath = await downloadChromiumRevision(revision);
+        const archivePath = await downloadChromiumRevision(revision);
 
         console.info('Step 3. Setting up Chromium binaries');
-        await unzipArchive(tmpPath, config.BIN_OUT_PATH);
+        await unzipArchive(archivePath, config.BIN_OUT_PATH);
 
         console.info('Process is successfully finished');
     } catch (error) {
@@ -105,5 +108,7 @@ if (require.main === module) {
     // Module called directly, not via "require", so execute install...
     install();
 }
+
+tmp.setGracefulCleanup(); // Ensure temporary files are cleaned up when process exits
 
 module.exports = install;
