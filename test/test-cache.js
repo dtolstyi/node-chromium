@@ -28,7 +28,7 @@ test.serial('get with no hit returns falsy', t => {
 });
 
 test.serial('put and retrieve cached file when disabled', t => {
-    process.env.CHROMIUM_CACHE_SKIP = 'true';
+    process.env.NODE_CHROMIUM_CACHE_DISABLE = 'true';
     const revision = Date.now().toString();
     const file = createDummyFile();
     t.falsy(cache.get(revision), 'There should be no cached file before the test');
@@ -87,8 +87,8 @@ test.serial('cache entries for different architectures do not collide', t => {
 function setCacheDir() {
     const cacheDir = path.join(os.tmpdir(), 'chromium-cache');
     fs.mkdirSync(cacheDir, {recursive: true});
-    testUtils.setEnvVar('CHROMIUM_CACHE', cacheDir);
-    testUtils.clearEnvVar('CHROMIUM_CACHE_SKIP');
+    testUtils.setEnvVar('NODE_CHROMIUM_CACHE', cacheDir);
+    testUtils.clearEnvVar('NODE_CHROMIUM_CACHE_DISABLE');
 }
 
 /**

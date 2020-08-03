@@ -43,11 +43,11 @@ function put(revision, filePath) {
  * @returns {string} The cache path, or falsy if caching is not enabled.
  */
 function buildCachePath(revision) {
-    if (!revision || config.getEnvVar('CHROMIUM_CACHE_SKIP').toLowerCase() === 'true') {
+    if (!revision || config.getEnvVar('NODE_CHROMIUM_CACHE_DISABLE').toLowerCase() === 'true') {
         return '';
     }
 
-    const cacheDir = config.getEnvVar('CHROMIUM_CACHE') || cachedir('node-chromium');
+    const cacheDir = config.getEnvVar('NODE_CHROMIUM_CACHE') || cachedir('node-chromium');
     return path.join(cacheDir, `chromium-${revision}-${process.platform}-${process.arch}.zip`);
 }
 
