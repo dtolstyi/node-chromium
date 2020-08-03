@@ -131,7 +131,7 @@ You may override the cache path by setting the `NODE_CHROMIUM_CACHE` environment
 export NODE_CHROMIUM_CACHE=/path/to/cache/dir/
 
 # or in .npmrc like so:
-# chromium_cache=/path/to/cache/dir/
+# node_chromium_cache=/path/to/cache/dir/
 ```
 
 You may disable caching by setting `NODE_CHROMIUM_CACHE_DISABLE` to `true`:
@@ -140,7 +140,7 @@ You may disable caching by setting `NODE_CHROMIUM_CACHE_DISABLE` to `true`:
 export NODE_CHROMIUM_CACHE_DISABLE=true
 
 # or in .npmrc like so:
-# chromium_cache_skip=true
+# node_chromium_cache_disable=true
 ```
 
 ## License
