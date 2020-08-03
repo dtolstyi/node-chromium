@@ -1,10 +1,8 @@
 'use strict';
 const path = require('path');
-const os = require('os');
 const fs = require('fs');
+const cachedir = require('cachedir');
 const config = require('./config');
-
-const CACHE_DIR = 'node-chromium';
 
 /**
  * Retrieve a Chromium archive from filesystem cache.
@@ -49,31 +47,7 @@ function buildCachePath(revision) {
         return '';
     }
 
-    let cacheDir = config.getEnvVar('CHROMIUM_CACHE');
-    if (!cacheDir) {
-        switch (os.platform()) {
-            case 'win32': {
-                cacheDir = process.env.LOCALAPPDATA || path.join(os.homedir(), 'AppData');
-                cacheDir = path.join(cacheDir, CACHE_DIR, 'Cache');
-                break;
-            }
-
-            case 'darwin': {
-                cacheDir = path.join(os.homedir(), 'Library', 'Caches', CACHE_DIR);
-                break;
-            }
-
-            case 'linux': {
-                cacheDir = process.env.XDG_CACHE_HOME || path.join(os.homedir(), '.cache', CACHE_DIR);
-                break;
-            }
-
-            default: {
-                path.join(os.homedir(), `.${CACHE_DIR}`);
-            }
-        }
-    }
-
+    const cacheDir = config.getEnvVar('CHROMIUM_CACHE') || cachedir('node-chromium');
     return path.join(cacheDir, `chromium-${revision}-${process.platform}-${process.arch}.zip`);
 }
 
