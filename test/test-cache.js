@@ -88,7 +88,7 @@ function setCacheDir() {
     const cacheDir = path.join(os.tmpdir(), 'chromium-cache');
     fs.mkdirSync(cacheDir, {recursive: true});
     testUtils.setEnvVar('CHROMIUM_CACHE', cacheDir);
-    testUtils.setEnvVar('CHROMIUM_CACHE_SKIP', '');
+    testUtils.clearEnvVar('CHROMIUM_CACHE_SKIP');
 }
 
 /**

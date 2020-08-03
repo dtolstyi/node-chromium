@@ -8,7 +8,7 @@ const config = require('../config');
 /* eslint camelcase: ["error", {properties: "never"}] */
 
 test.beforeEach(t => {
-    testUtils.setEnvVar('FOO_BAR', '');
+    testUtils.clearEnvVar('FOO_BAR');
     t.pass();
 });
 

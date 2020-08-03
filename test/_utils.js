@@ -5,20 +5,26 @@ const platform = process.platform;
 const arch = process.arch;
 
 /**
- * Sets or unsets an environment variable and the corresponding npm_config variant.
+ * Sets an environment variable and the corresponding npm_config variant.
  *
  * @param {string} name The UPPER_CASE name of the environment variable.
  * @param {string} value The value to set - if falsy will be deleted.
  */
 function setEnvVar(name, value) {
     const npmName = `npm_config_${name.toLowerCase()}`;
-    if (value) {
-        process.env[name] = value;
-        process.env[npmName] = value;
-    } else {
-        delete process.env[name];
-        delete process.env[npmName];
-    }
+    process.env[name] = value;
+    process.env[npmName] = value;
+}
+
+/**
+ * Clear an environment variable and the corresponding npm_config variant.
+ *
+ * @param {string} name The UPPER_CASE name of the environment variable.
+ */
+function clearEnvVar(name) {
+    const npmName = `npm_config_${name.toLowerCase()}`;
+    delete process.env[name];
+    delete process.env[npmName];
 }
 
 /**
@@ -53,5 +59,6 @@ module.exports = {
     mockPlatform,
     mockArch,
     clearMocks,
-    setEnvVar
+    setEnvVar,
+    clearEnvVar
 };
