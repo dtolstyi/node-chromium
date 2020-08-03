@@ -36,7 +36,8 @@
   "dependencies": {
     "debug": "^4.1.0",
     "extract-zip": "^1.7.0",
-    "got": "^7.1.0",
+    "got": "^11.5.1",
+    "progress": "^2.0.3",
     "tmp": "0.0.33",
     "tunnel": "^0.0.6"
   },

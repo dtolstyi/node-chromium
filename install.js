@@ -5,9 +5,12 @@ const extractZip = require('extract-zip');
 const got = require('got');
 const tmp = require('tmp');
 const debug = require('debug')('node-chromium');
+const ProgressBar = require('progress');
 
 const config = require('./config');
 const utils = require('./utils');
+
+let progressBar = null;
 
 /* eslint unicorn/prevent-abbreviations: ["off"] */
 
@@ -36,6 +39,7 @@ async function downloadChromiumRevision(revision) {
 function _downloadFile(url, destPath) {
     return new Promise((resolve, reject) => {
         got.stream(url, utils.getRequestOptions(url))
+            .on('downloadProgress', onProgress)
             .on('error', error => {
                 console.error('An error occurred while trying to download file', error.message);
                 reject(error);
@@ -49,6 +53,32 @@ function _downloadFile(url, destPath) {
                 resolve(destPath);
             });
     });
+}
+
+/**
+ * Handles download progress events.
+ * @param progress Information about progress so far.
+ */
+function onProgress(progress) {
+    try {
+        if (!progressBar) {
+            const formatBytes = bytes => {
+                const mb = bytes / 1024 / 1024;
+                return `${Math.round(mb * 10) / 10} MB`;
+            };
+
+            progressBar = new ProgressBar(`Downloading Chromium - ${formatBytes(progress.total)} [:bar] :percent :etas `, {
+                width: 20,
+                total: progress.total
+            });
+        }
+
+        progressBar.tick(progress.transferred - progressBar.curr);
+    } catch (error) {
+        // Don't die on progress bar failure, log it and stop progress
+        console.error('Error displaying progress bar. Continuing anyway...', error);
+        progressBar = {tick: () => {}};
+    }
 }
 
 function unzipArchive(archivePath, outputFolder) {
@@ -73,7 +103,7 @@ async function install() {
         console.info('Step 1. Retrieving Chromium revision number');
         const revision = chromiumRevision || await utils.getLatestRevisionNumber();
 
-        console.info(`Step 2. Downloading Chromium (this might take a while). Revision number: ${revision}`);
+        console.info(`Step 2. Downloading Chromium revision ${revision}`);
         const tmpPath = await downloadChromiumRevision(revision);
 
         console.info('Step 3. Setting up Chromium binaries');
