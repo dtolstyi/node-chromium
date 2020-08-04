@@ -26,14 +26,14 @@ test.serial('getDownloadUrl contains revision', t => {
 });
 
 test.serial('getDownloadUrl honors environment variable', t => {
-    process.env.CHROMIUM_DOWNLOAD_HOST = OVERRIDE_URL;
+    process.env.NODE_CHROMIUM_DOWNLOAD_HOST = OVERRIDE_URL;
 
     const url = utils.getDownloadUrl('737027');
     t.true(url.indexOf(OVERRIDE_URL) === 0, `Download URL should honor environment variable ${OVERRIDE_URL} but got ${url}`);
 });
 
 test.serial('getDownloadUrl honors npm config', t => {
-    process.env.npm_config_chromium_download_host = OVERRIDE_URL;
+    process.env.npm_config_node_chromium_download_host = OVERRIDE_URL;
 
     const url = utils.getDownloadUrl('737027');
     t.true(url.indexOf(OVERRIDE_URL) === 0, `Download URL should honor npm config ${OVERRIDE_URL} but got ${url}`);
