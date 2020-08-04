@@ -76,6 +76,7 @@ function _downloadFile(url, destPath) {
  * @param progress Information about progress so far.
  */
 function onProgress(progress) {
+    const fakeProgressBar = {tick: () => {}};
     try {
         if (!progressBar) {
             const formatBytes = bytes => {
@@ -83,17 +84,22 @@ function onProgress(progress) {
                 return `${Math.round(mb * 10) / 10} MB`;
             };
 
-            progressBar = new ProgressBar(`Downloading Chromium - ${formatBytes(progress.total)} [:bar] :percent :etas `, {
-                width: 20,
-                total: progress.total
-            });
+            if (progress.total) {
+                progressBar = new ProgressBar(`Downloading Chromium - ${formatBytes(progress.total)} [:bar] :percent :etas `, {
+                    width: 20,
+                    total: progress.total
+                });
+            } else {
+                progressBar = fakeProgressBar;
+                console.info('\tPlease wait, this may take a while...');
+            }
         }
 
         progressBar.tick(progress.transferred - progressBar.curr);
     } catch (error) {
         // Don't die on progress bar failure, log it and stop progress
         console.error('Error displaying progress bar. Continuing anyway...', error);
-        progressBar = {tick: () => {}};
+        progressBar = fakeProgressBar;
     }
 }
 

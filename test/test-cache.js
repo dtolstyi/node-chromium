@@ -87,7 +87,7 @@ test.serial('cache entries for different architectures do not collide', t => {
 function setCacheDir() {
     const cacheDir = path.join(os.tmpdir(), 'chromium-cache');
     fs.mkdirSync(cacheDir, {recursive: true});
-    testUtils.setEnvVar('NODE_CHROMIUM_CACHE', cacheDir);
+    testUtils.setEnvVar('NODE_CHROMIUM_CACHE_PATH', cacheDir);
     testUtils.clearEnvVar('NODE_CHROMIUM_CACHE_DISABLE');
 }
 

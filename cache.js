@@ -47,7 +47,7 @@ function buildCachePath(revision) {
         return '';
     }
 
-    const cachePath = config.getEnvVar('NODE_CHROMIUM_CACHE') || cachedir('node-chromium');
+    const cachePath = config.getEnvVar('NODE_CHROMIUM_CACHE_PATH') || cachedir('node-chromium');
     return path.join(cachePath, `chromium-${revision}-${process.platform}-${process.arch}.zip`);
 }
 

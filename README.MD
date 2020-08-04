@@ -125,13 +125,13 @@ start();
 ### Cache Downloaded Binaries
 By default downloaded chromium binaries are cached in the appropriate cache directory for your operating system.
 
-You may override the cache path by setting the `NODE_CHROMIUM_CACHE` environment variable to a directory path, for example:
+You may override the cache path by setting the `NODE_CHROMIUM_CACHE_PATH` environment variable to a directory path, for example:
 
 ```bash
-export NODE_CHROMIUM_CACHE=/path/to/cache/dir/
+export NODE_CHROMIUM_CACHE_PATH=/path/to/cache/dir/
 
 # or in .npmrc like so:
-# node_chromium_cache=/path/to/cache/dir/
+# node_chromium_cache_path=/path/to/cache/dir/
 ```
 
 You may disable caching by setting `NODE_CHROMIUM_CACHE_DISABLE` to `true`:
