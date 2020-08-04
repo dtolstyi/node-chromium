@@ -57,7 +57,7 @@ module.exports = {
      * @returns {string}
      */
     getDownloadUrl(revision) {
-        const altUrl = config.getEnvVar('CHROMIUM_DOWNLOAD_HOST');
+        const altUrl = config.getEnvVar('NODE_CHROMIUM_DOWNLOAD_HOST');
         let revisionPath = `/${revision}/${this.getOsChromiumFolderName()}`;
         if (!altUrl) {
             revisionPath = encodeURIComponent(revisionPath); // Needed for googleapis.com
@@ -72,7 +72,7 @@ module.exports = {
      * @returns {string}
      */
     getOsCdnUrl() {
-        let url = config.getEnvVar('CHROMIUM_DOWNLOAD_HOST') || config.CDN_URL;
+        let url = config.getEnvVar('NODE_CHROMIUM_DOWNLOAD_HOST') || config.CDN_URL;
 
         const platform = process.platform;
 
