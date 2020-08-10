@@ -142,7 +142,11 @@ async function install() {
 
 if (require.main === module) {
     // Module called directly, not via "require", so execute install...
-    install();
+    if (config.getEnvVar('NODE_CHROMIUM_SKIP_INSTALL').toLowerCase() === 'true') {
+        console.info('Skipping chromium install');
+    } else {
+        install();
+    }
 }
 
 tmp.setGracefulCleanup(); // Ensure temporary files are cleaned up when process exits

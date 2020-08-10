@@ -11,6 +11,7 @@ const testUtils = require('./_utils');
 const utils = require('../utils');
 const config = require('../config');
 const install = require('../install');
+const chromium = require('..');
 
 test.before(t => {
     // Deleting output folder
@@ -36,6 +37,7 @@ test.serial('Canary Test', t => {
 test.serial('Before Install Process', t => {
     const binPath = utils.getOsChromiumBinPath();
     t.false(fs.existsSync(binPath), `Chromium binary is found in: [${binPath}]`);
+    t.falsy(chromium.path, 'chromium.path should not be defined when there is no installation');
 });
 
 test.serial('Chromium Install', async t => {
@@ -43,6 +45,7 @@ test.serial('Chromium Install', async t => {
     const binPath = utils.getOsChromiumBinPath();
     const isExists = fs.existsSync(binPath);
     t.true(isExists, `Chromium binary is not found in: [${binPath}]`);
+    t.true(fs.existsSync(chromium.path), 'chromium.path should be defined after installation');
 });
 
 test.serial('Different OS support', async t => {

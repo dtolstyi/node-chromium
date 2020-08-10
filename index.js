@@ -15,6 +15,12 @@ function getBinaryPath() {
 }
 
 module.exports = {
-    path: getBinaryPath(),
+    /*
+     * The path property needs to use a getter because the binaries may not be present for any number of reasons.
+     * Using a getter allows this property to update itself as needed and reflect the current state of the filesystem.
+     */
+    get path() {
+        return getBinaryPath();
+    },
     install: require('./install')
 };
