@@ -143,6 +143,24 @@ export NODE_CHROMIUM_CACHE_DISABLE=true
 # node_chromium_cache_disable=true
 ```
 
+### Skip Automatic Chromium Install
+
+Chromium will ordinarily be installed when you exectute `npm install` however you may wish to skip this step if you are going to defer installation and perform it programatically at a later stage. Below is an example of how to do so.
+
+```bash
+export NODE_CHROMIUM_SKIP_INSTALL=true
+
+# or in .npmrc like so:
+# node_chromium_skip_install=true
+```
+
+Then install it programatically when you need it:
+
+```js
+chromium.install().then(function() {
+    // do stuff...
+});
+```
 ## Contributors
 <table>
   <tr style="background: #ffec86">
