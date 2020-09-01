@@ -129,17 +129,20 @@ module.exports = {
                     tunnelOptions.proxy.proxyAuth = `${proxyUrl.username}:${proxyUrl.password}`;
                 }
 
+                const agent = {};
                 if (url.startsWith('https://')) {
                     if (proxy.startsWith('https://')) {
-                        requestOptions.agent = tunnel.httpsOverHttps(tunnelOptions);
+                        agent.https = tunnel.httpsOverHttps(tunnelOptions);
                     } else {
-                        requestOptions.agent = tunnel.httpsOverHttp(tunnelOptions);
+                        agent.https = tunnel.httpsOverHttp(tunnelOptions);
                     }
                 } else if (proxy.startsWith('https://')) {
-                    requestOptions.agent = tunnel.httpOverHttps(tunnelOptions);
+                    agent.http = tunnel.httpOverHttps(tunnelOptions);
                 } else {
-                    requestOptions.agent = tunnel.httpOverHttp(tunnelOptions);
+                    agent.http = tunnel.httpOverHttp(tunnelOptions);
                 }
+
+                requestOptions.agent = agent;
             }
         }
 
