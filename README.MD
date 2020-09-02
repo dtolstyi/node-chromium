@@ -174,6 +174,7 @@ chromium.install().then(function() {
     <td align="center"><a href="https://github.com/dhAlcojor"><img src="https://avatars3.githubusercontent.com/u/567687?s=460&u=4fe23913c4a02531192701bc5ff393a296f38ac2&v=4" width="100px;" alt=""/><br /><sub><b>Daniel Hernández Alcojor</b></sub></a></td>
     <td align="center"><a href="https://github.com/rcooney"><img src="https://avatars3.githubusercontent.com/u/5251278?s=460&v=4" width="100px;" alt=""/><br /><sub><b>Ryan Cooney</b></sub></a></td>
     <td align="center"><a href="https://github.com/amilajack"><img src="https://avatars1.githubusercontent.com/u/6374832?s=460&u=8e2f43ba7405c7d991351d95854ec1c64e7e4d52&v=4" width="100px;" alt=""/><br /><sub><b>Amila Welihinda</b></sub></a></td>
+    <td align="center"><a href="https://github.com/Timon0"><img src="https://avatars3.githubusercontent.com/u/26453313?s=460&v=4" width="100px;" alt=""/><br /><sub><b>Timon Kurmann</b></sub></a></td>
   </tr>
 </table>
 
