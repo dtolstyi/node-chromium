@@ -102,7 +102,7 @@ module.exports = {
      */
     async getLatestRevisionNumber() {
         const url = this.getOsCdnUrl() + '%2FLAST_CHANGE?alt=media';
-        return (await got(url, this.getRequestOptions(url))).body;
+        return 'refs_heads_main-' + (await got(url, this.getRequestOptions(url))).body;
     },
 
     /**
