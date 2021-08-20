@@ -49,23 +49,34 @@ module.exports = {
         return binPath;
     },
 
-    /**
-     * Returns full URL where Chromium can be found for current OS
-     *
-     * @param revision - Chromium revision
-     *
-     * @returns {string}
-     */
-    getDownloadUrl(revision) {
-        const altUrl = config.getEnvVar('NODE_CHROMIUM_DOWNLOAD_HOST');
-        let revisionPath = `/${revision}/${this.getOsChromiumFolderName()}`;
-        if (!altUrl) {
-            revisionPath = encodeURIComponent(revisionPath); // Needed for googleapis.com
-        }
+  /**
+   * Returns full URL where Chromium can be found for current OS
+   *
+   * @param revision - Chromium revision
+   *
+   * @returns {string}
+   */
+   async getDownloadUrl(revision) {
+    const altUrl = config.getEnvVar('NODE_CHROMIUM_DOWNLOAD_HOST')
+    let revisionPath = `/${revision}/${this.getOsChromiumFolderName()}`
 
-        return `${this.getOsCdnUrl()}${revisionPath}.zip?alt=media`;
-    },
+    if (!altUrl) {
+      revisionPath = encodeURIComponent(revisionPath) // Needed for googleapis.com
+    }
 
+    try {
+      await got.head(`${this.getOsCdnUrl()}${revisionPath}.zip?alt=media`)
+    } catch (err) {
+      console.log('in error block')
+      // If normal URL revision structure not found, try with updated revision url pattern
+      if (revision.startsWith('refs_heads_main-') === false) {
+          console.info(`Something went wrong resolving revision URL with revision '${revision}', trying with '${'refs_heads_main-' + revision}'`)
+          return this.getDownloadUrl('refs_heads_main-' + revision)
+      }
+      throw err
+    }
+    return `${this.getOsCdnUrl()}${revisionPath}.zip?alt=media`
+  },
     /**
      * Returns download Url according to current OS
      *
@@ -102,7 +113,7 @@ module.exports = {
      */
     async getLatestRevisionNumber() {
         const url = this.getOsCdnUrl() + '%2FLAST_CHANGE?alt=media';
-        return 'refs_heads_main-' + (await got(url, this.getRequestOptions(url))).body;
+        return (await got(url, this.getRequestOptions(url))).body;
     },
 
     /**
