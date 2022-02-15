@@ -88,6 +88,9 @@ module.exports = {
             }
         } else if (platform === 'darwin') {
             url += 'Mac';
+            if (process.arch === 'arm64') {
+                url += '_Arm';
+            }
         } else {
             throw new Error('Unsupported platform');
         }
