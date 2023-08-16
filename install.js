@@ -44,7 +44,7 @@ async function downloadChromiumRevision(revision) {
     }
 
     debug('Downloading Chromium archive from Google CDN');
-    const url = utils.getDownloadUrl(revision);
+    const url = await utils.getDownloadUrl(revision);
     const tmpPath = await createTempFile();
     return _downloadFile(url, tmpPath).then(tmpPath => {
         cache.put(revision, tmpPath);
